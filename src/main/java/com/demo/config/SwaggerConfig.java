@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * @author dzy
  * @date 2021/5/7
- * @desc Swagger配置类,包含Authorization认真模块
+ * @desc Swagger配置类,包含Authorization认证模块
  */
 @Configuration
 @EnableSwagger2

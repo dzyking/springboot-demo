@@ -30,10 +30,7 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTokenFilter())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/register", "/user/smscode", "/user/login")
-                .excludePathPatterns("/swagger-ui.html/**", "/v2/**", "/webjars/**", "/swagger-resources/**")
-                .excludePathPatterns("/userCard/selectAllUserCard")
-                .excludePathPatterns("/systemCard/add", "/systemCard/delete", "/systemCard/update", "/systemCard/selectAll");
+                .excludePathPatterns("/swagger-ui.html/**", "/v2/**", "/webjars/**", "/swagger-resources/**");
         super.addInterceptors(registry);
     }
 
