@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>答题竞赛</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.toast.css"/>
+    <link rel="stylesheet" type="text/css" href="src/css/index.css"/>
+    <script type="text/javascript" src="assets/js/jquery.1.8.3.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.toast.js"></script>
+    <script type="text/javascript" src="src/js/Utils.js"></script>
+    <script type="text/javascript" src="src/js/index.js"></script>
+</head>
+<body>
+<div class="left-bottom-sign"></div>
+<div class="right-top-sign"></div>
+<div class="container">
+    <div class="wrapper">
+        <div class="logo-image">
+            <h3><span id="name">xxx</span>,您好</h3>
+        </div>
+        <div class="time-content">
+            <h3>答题竞赛倒计时</h3>
+            <h5 id="time">xx时xx分xx秒</h5>
+        </div>
+    </div>
+</div>
+<div class="topic">
+    <div class="paper-head-top">
+        <div class="uni-countdown__number" id="hour">00</div>
+        <div class="uni-countdown__splitor">:</div>
+        <div class="uni-countdown__number" id="min">29</div>
+        <div class="uni-countdown__splitor">:</div>
+        <div class="uni-countdown__number" id="sec">29</div>
+    </div>
+    <div class="paper-head">
+        <div class="paper-title">成立日答题竞赛</div>
+        <div class="paper-des">
+            <span>第<span id="number">xx</span>/<span id="total">xx</span>题</span>
+            <span>答题时间：30分钟</span>
+        </div>
+    </div>
+    <div class="entrance">
+        <div class="exam-qustion-content"><span id="type">xx题</span></div>
+        <div class="entrance-bottom-frame-line">
+            <div class="entrance-bottom-frame-line-title" id="subject">xxx</div>
+            <div id="detailList"></div>
+        </div>
+    </div>
+    <div class="confirm">
+        <input type="button" class="confirm-btn" value="下一题"/>
+        <span id="useTime">00</span>
+    </div>
+</div>
+</body>
+</html>

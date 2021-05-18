@@ -1,0 +1,235 @@
+body, html {
+    margin: 0;
+    background: #fff;
+    font-size: 15px;
+    color: #333;
+    font-family: Helvetica Neue, Helvetica, sans-serif;
+    user-select: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    padding-top: 20vh;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+}
+
+.wrapper {
+    position: relative;
+    z-index: 1000;
+}
+
+.logo-image {
+    text-align: center;
+    height: 92px;
+    margin-bottom: 33px;
+}
+
+.logo-image h3 {
+    line-height: 92px;
+    font-size: 40px;
+    padding: 0;
+    margin: 0;
+    color: rgb(31, 142, 201);
+}
+
+.right-top-sign {
+    position: absolute;
+    top: 44px;
+    right: -16px;
+    z-index: 95;
+}
+
+.right-top-sign:before, .right-top-sign:after {
+    display: block;
+    content: "";
+    width: 220px;
+    height: 44px;
+    background: #b4f3e2;
+}
+
+.right-top-sign:before {
+    transform: rotate(50deg);
+    border-radius: 0 50px 0 0;
+}
+
+.right-top-sign:after {
+    position: absolute;
+    right: -109px;
+    top: 0;
+    transform: rotate(-50deg);
+    border-radius: 50px 0 0 0
+}
+
+.left-bottom-sign {
+    position: absolute;
+    left: -149px;
+    bottom: 0;
+    border: 55px solid #d0d1fd;
+    border-radius: 50%;
+    padding: 99px;
+}
+
+.time-content {
+    padding: 40px 33px;
+    text-align: center;
+    color: #FF0000;
+}
+
+.time-content h3 {
+    font-size: 40px;
+    color: #333;
+}
+
+.time-content h5 {
+    font-size: 30px;
+}
+
+
+/*topic页面*/
+.topic {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.paper-head-top {
+    background: #f0f0f0;
+    text-align: center;
+    padding: 2px;
+    width: 100%;
+    height: 24px;
+    line-height: 22px;
+    color: #333;
+}
+
+.uni-countdown__number {
+    display: inline;
+    background: #ffffff;
+    line-height: 18px;
+    justify-content: center;
+    height: 18px;
+    border-radius: 2px;
+    margin: 0 2px;
+    border: 1px solid #333;
+    font-size: 10px;
+    padding: 0 4px;
+}
+
+.uni-countdown__splitor {
+    display: inline;
+    justify-content: center;
+    line-height: 18px;
+    padding: 0 2px;
+    font-size: 11px;
+}
+
+.paper-head {
+    text-align: center;
+    margin-top: 4px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.paper-title {
+    font-size: 28px;
+    padding: 10px 0;
+}
+
+.paper-des {
+    font-size: 16px;
+}
+
+#number {
+    color: #fbb561;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.entrance {
+    padding: 0 33px;
+    margin-bottom: 50px;
+}
+
+.exam-qustion-content {
+    font-size: 20px;
+    line-height: 50px;
+}
+
+.entrance-bottom-frame-line {
+    font-size: 28px;
+}
+
+#useTime {
+    display: inline-block;
+    background: #fbb561;
+    width: 100px;
+    height: 41px;
+    font-size: 20px;
+    border-radius: 2px;
+    line-height: 41px;
+    text-align: center;
+    position: relative;
+    top: -41px;
+    color: white;
+}
+
+.entrance-bottom-frame-line-title {
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.entrance-bottom-frame-line-button {
+    background: #f7f7f7;
+    border-radius: 0.54rem;
+    margin: 25px 0;
+    font-size: 16px;
+}
+
+.entrance-bottom-frame-line-button-id {
+    height: 50px;
+    display: table-cell;
+    line-height: 50px;
+    padding: 0 5px 0 10px;
+}
+
+.entrance-bottom-frame-line-button-frame {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0 10px;
+}
+
+
+.entrance-bottom-frame-line-button.active {
+    color: white;
+    background: #f86d07
+}
+
+.confirm {
+    padding: 0 33px;
+    position: relative;
+    z-index: 1000;
+    text-align: center;
+}
+
+.confirm-btn {
+    width: 100%;
+    height: 41px;
+    border-radius: 50px;
+    background: #0095ff;
+    color: #fff;
+    font-size: 17px;
+    outline: none;
+    border: none;
+}
+
+.confirm-btn:disabled {
+    opacity: 0.1;
+}
