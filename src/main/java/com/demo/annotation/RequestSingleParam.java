@@ -1,0 +1,21 @@
+package com.demo.annotation;
+
+import org.springframework.web.bind.annotation.ValueConstants;
+
+import java.lang.annotation.*;
+
+/**
+ * 自定义注解接收单个参数
+ */
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface RequestSingleParam {
+
+    String value();
+
+    boolean required() default true;
+
+    String defaultValue() default ValueConstants.DEFAULT_NONE;
+
+}

@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 /**
- * @author dzy
- * @date 2021/5/12
- * @desc 全局异常监听器
+ * @desc 全局异常监听器,自定义异常等
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

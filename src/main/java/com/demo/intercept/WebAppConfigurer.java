@@ -1,9 +1,11 @@
 package com.demo.intercept;
 
+import com.demo.annotation.RequestSingleParamHandlerMethodArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -13,10 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * @Author :lrj
- * @ClassName :WebAppConfigurer
- * @Description :
- * @date :2021/5/6 16:13
+ * @Description : web请求拦截器
  */
 @Configuration
 public class WebAppConfigurer extends WebMvcConfigurationSupport {
@@ -30,7 +29,11 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginTokenFilter())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/swagger-ui.html/**", "/v2/**", "/webjars/**", "/swagger-resources/**");
+                .excludePathPatterns("/user/register", "/user/smsCode", "/user/login")
+                .excludePathPatterns("/swagger-ui.html/**", "/v2/**", "/webjars/**", "/swagger-resources/**")
+                .excludePathPatterns("/userCard/selectAllUserCard")
+                .excludePathPatterns("/systemCard/add", "/systemCard/delete", "/systemCard/update", "/systemCard/selectAll")
+                .excludePathPatterns("/public/**", "/common/districts");
         super.addInterceptors(registry);
     }
 
@@ -38,7 +41,6 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
      * 解决swagger-ui 无法访问
      * 两个方法都需要重写，只加任何一个都无法生效
      *
-     * @param registry
      */
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -49,6 +51,7 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
     }
 
     /**
+     * @author: lrj
      * @Description: 下面三个方法是配置全局utf-8
      * @Date: 2021/5/7
      * @return: org.springframework.http.converter.HttpMessageConverter<java.lang.String>
@@ -71,4 +74,21 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
             ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
+
+
+    /**
+     * 自定义注解参数数解析器
+     *
+     */
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(new RequestSingleParamHandlerMethodArgumentResolver());
+        super.addArgumentResolvers(argumentResolvers);
+    }
+
+    @Bean
+    public RequestSingleParamHandlerMethodArgumentResolver requestStringParamHandlerMethodArgumentResolver() {
+        return new RequestSingleParamHandlerMethodArgumentResolver();
+    }
+
 }
