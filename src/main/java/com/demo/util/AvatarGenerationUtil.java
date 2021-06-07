@@ -1,8 +1,5 @@
 package com.demo.util;
 
-
-import com.demo.constant.CommonConstant;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -13,7 +10,13 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * @author lingzhiying
+ * @title: test.java
+ * @projectName spacepm
+ * @description: 头像生成工具
+ * @date 2019年1月11日
+ */
 public class AvatarGenerationUtil {
 
     public static void main(String[] args) throws IOException {
@@ -33,6 +36,7 @@ public class AvatarGenerationUtil {
      */
     public static String generateImg(String name, String outputName)
             throws IOException {
+        String destPath = System.getProperty("java.io.tmpdir");
         int width = 100;
         int height = 100;
         int nameLen = name.length();
@@ -45,7 +49,6 @@ public class AvatarGenerationUtil {
             String first = name.substring(0, 1);
             if (isChinese(first)) {
                 //截取倒数两位汉字
-                //nameWritten = name.substring(nameLen - 1);
                 nameWritten = name.substring(0, 1);
             } else {
                 //截取前面的两个英文字母
@@ -53,8 +56,7 @@ public class AvatarGenerationUtil {
             }
         }
 
-        String filename = CommonConstant.HEAD_FILE_ADDRESS_PREFIX + File.separator + outputName + ".jpg";
-        String fileUrlName = CommonConstant.HEAD_FILE_URL_PREFIX + File.separator + outputName + ".jpg";
+        String filename = destPath + File.separator + outputName + ".jpg";
         File file = new File(filename);
         //Font font = new Font("微软雅黑", Font.PLAIN, 30);
 
@@ -67,7 +69,6 @@ public class AvatarGenerationUtil {
         g2.setBackground(getRandomColor());
 
         g2.clearRect(0, 0, width, height);
-
         g2.setPaint(Color.WHITE);
 
 
@@ -110,10 +111,9 @@ public class AvatarGenerationUtil {
             }
 
         }
-
-        BufferedImage rounded = makeRoundedCorner(bi, 99);
+        BufferedImage rounded = makeRoundedCorner(bi, 0);
         ImageIO.write(rounded, "png", file);
-        return fileUrlName;
+        return filename;
     }
 
     public static String getPhotoByName(String name) throws IOException {
@@ -131,7 +131,11 @@ public class AvatarGenerationUtil {
         String regEx = "[\\u4e00-\\u9fa5]+";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(str);
-        return m.find();
+        if (m.find()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
