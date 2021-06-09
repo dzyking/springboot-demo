@@ -26,7 +26,7 @@ import java.util.Date;
 public class LogRecordAspect {
 
     // 定义切点Pointcut
-    @Pointcut("execution(* com.xunda.im.controller.*Controller.*(..))")
+    @Pointcut("execution(* com.demo.*Controller.*(..))")
     public void executionService() {
     }
 
