@@ -3,8 +3,10 @@ package com.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.ApiKey;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.SecurityReference;
@@ -28,6 +30,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
@@ -36,6 +39,21 @@ public class SwaggerConfig {
                 .securityContexts(securityContexts());
     }
 
+    /**
+     * 创建该API的基本信息（这些基本信息会展现在文档页面中）
+     * 访问地址：http://项目实际地址/swagger-ui.html
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("默言默语")
+                .description("api接口文档")
+                .termsOfServiceUrl("http://www.docway.net/project/1eXHcc3Erbt/1eXHjVeWK9Y")
+                .build();
+    }
+
+    /**
+     * 开启Authorization认证模块
+     */
     private List<SecurityContext> securityContexts() {
         List<SecurityContext> securityContextList = new ArrayList<>();
         List<SecurityReference> securityReferenceList = new ArrayList<>();

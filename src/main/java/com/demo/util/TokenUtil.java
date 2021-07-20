@@ -73,11 +73,8 @@ public class TokenUtil {
     }
 
     /**
-     * @param token
-     * @author: lrj
      * @Description:根据token获取用户信息,token即将过期，则刷新缓存
      * @Date: 2021/5/7
-     * @return: com.xunda.im.dao.User
      */
     public static User getUserByToken(String token) {
         /*DecodedJWT jwt = JWT.decode(token);
@@ -97,11 +94,7 @@ public class TokenUtil {
     }
 
     /**
-     * @param
-     * @author: lrj
      * @Description: 获取用户信息
-     * @Date: 2021/5/7
-     * @return: com.xunda.im.dao.User
      */
     public static User getUser() {
         HttpServletRequest request = ServletUtil.getRequest();
@@ -112,10 +105,7 @@ public class TokenUtil {
 
     /**
      * @param
-     * @author: lrj
      * @Description:获取用户ID
-     * @Date: 2021/5/7
-     * @return: java.lang.String
      */
     public static Integer getUserId() {
         HttpServletRequest request = ServletUtil.getRequest();

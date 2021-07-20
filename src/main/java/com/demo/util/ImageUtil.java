@@ -1,298 +1,264 @@
 package com.demo.util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 /**
- * 图片处理类
+ * 生成群成员头像
  */
+@Slf4j
 public final class ImageUtil {
-
-    /**
-     * 图片格式：JPG
-     */
-    private static final String PICTRUE_FORMATE_JPG = "JPG";
-    private static final int PIC_WIDTH = 400; // 这是画板的宽高
-    private static final int PIC_HEIGHT = 400; // 这是画板的高度
-
-    private ImageUtil() {
+    public static String[] getXy(int size) {
+        String[] s = new String[size];
+        int _x = 0;
+        int _y = 0;
+        if (size == 1) {
+            _x = _y = 6;
+            s[0] = "6,6";
+        }
+        if (size == 2) {
+            _x = _y = 4;
+            s[0] = "4," + (132 / 2 - 60 / 2);
+            s[1] = 60 + 2 * _x + "," + (132 / 2 - 60 / 2);
+        }
+        if (size == 3) {
+            _x = _y = 4;
+            s[0] = (132 / 2 - 60 / 2) + "," + _y;
+            s[1] = _x + "," + (60 + 2 * _y);
+            s[2] = (60 + 2 * _y) + "," + (60 + 2 * _y);
+        }
+        if (size == 4) {
+            _x = _y = 4;
+            s[0] = _x + "," + _y;
+            s[1] = (_x * 2 + 60) + "," + _y;
+            s[2] = _x + "," + (60 + 2 * _y);
+            s[3] = (60 + 2 * _y) + "," + (60 + 2 * _y);
+        }
+        if (size == 5) {
+            _x = _y = 3;
+            s[0] = (132 - 40 * 2 - _x) / 2 + "," + (132 - 40 * 2 - _y) / 2;
+            s[1] = ((132 - 40 * 2 - _x) / 2 + 40 + _x) + "," + (132 - 40 * 2 - _y) / 2;
+            s[2] = _x + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+            s[3] = (_x * 2 + 40) + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+            s[4] = (_x * 3 + 40 * 2) + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+        }
+        if (size == 6) {
+            _x = _y = 3;
+            s[0] = _x + "," + ((132 - 40 * 2 - _x) / 2);
+            s[1] = (_x * 2 + 40) + "," + ((132 - 40 * 2 - _x) / 2);
+            s[2] = (_x * 3 + 40 * 2) + "," + ((132 - 40 * 2 - _x) / 2);
+            s[3] = _x + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+            s[4] = (_x * 2 + 40) + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+            s[5] = (_x * 3 + 40 * 2) + "," + ((132 - 40 * 2 - _x) / 2 + 40 + _y);
+        }
+        if (size == 7) {
+            _x = _y = 3;
+            s[0] = (132 - 40) / 2 + "," + _y;
+            s[1] = _x + "," + (_y * 2 + 40);
+            s[2] = (_x * 2 + 40) + "," + (_y * 2 + 40);
+            s[3] = (_x * 3 + 40 * 2) + "," + (_y * 2 + 40);
+            s[4] = _x + "," + (_y * 3 + 40 * 2);
+            s[5] = (_x * 2 + 40) + "," + (_y * 3 + 40 * 2);
+            s[6] = (_x * 3 + 40 * 2) + "," + (_y * 3 + 40 * 2);
+        }
+        if (size == 8) {
+            _x = _y = 3;
+            s[0] = (132 - 80 - _x) / 2 + "," + _y;
+            s[1] = ((132 - 80 - _x) / 2 + _x + 40) + "," + _y;
+            s[2] = _x + "," + (_y * 2 + 40);
+            s[3] = (_x * 2 + 40) + "," + (_y * 2 + 40);
+            s[4] = (_x * 3 + 40 * 2) + "," + (_y * 2 + 40);
+            s[5] = _x + "," + (_y * 3 + 40 * 2);
+            s[6] = (_x * 2 + 40) + "," + (_y * 3 + 40 * 2);
+            s[7] = (_x * 3 + 40 * 2) + "," + (_y * 3 + 40 * 2);
+        }
+        if (size == 9) {
+            _x = _y = 3;
+            s[0] = _x + "," + _y;
+            s[1] = _x * 2 + 40 + "," + _y;
+            s[2] = _x * 3 + 40 * 2 + "," + _y;
+            s[3] = _x + "," + (_y * 2 + 40);
+            s[4] = (_x * 2 + 40) + "," + (_y * 2 + 40);
+            s[5] = (_x * 3 + 40 * 2) + "," + (_y * 2 + 40);
+            s[6] = _x + "," + (_y * 3 + 40 * 2);
+            s[7] = (_x * 2 + 40) + "," + (_y * 3 + 40 * 2);
+            s[8] = (_x * 3 + 40 * 2) + "," + (_y * 3 + 40 * 2);
+        }
+        return s;
     }
 
-    /**
-     * 生成群头像
-     *
-     * @param userAvatars 用户头像
-     * @throws IOException
-     */
-    public static void getGroupAvatar(List<String> userAvatars, String destPath) throws IOException {
-        int totalPicNum = userAvatars.size();
-        if (totalPicNum > 9) {
-            totalPicNum = 9;
+    public static int getWidth(int size) {
+        int width = 0;
+        if (size == 1) {
+            width = 120;
         }
-        PicInfo picInfo = getPicInfo(totalPicNum);
-        List<BufferedImage> bufferedImages = new ArrayList<BufferedImage>();
-        // 压缩图片所有的图片生成尺寸
-        for (int i = 0; i < totalPicNum; i++) {
-            bufferedImages.add(resizeNetWorkImage(userAvatars.get(i), picInfo.getPerPicWith(), picInfo.getPerPicHeight(), true));
+        if (size > 1 && size <= 4) {
+            width = 60;
         }
-        BufferedImage outImage = new BufferedImage(PIC_WIDTH, PIC_HEIGHT, BufferedImage.TYPE_INT_RGB);
-        // 生成画布
-        Graphics graphics = outImage.getGraphics();
-        Graphics2D graphics2d = (Graphics2D) graphics;
-        graphics2d.setBackground(new Color(231, 231, 231));
-        graphics2d.clearRect(0, 0, PIC_WIDTH, PIC_HEIGHT);
-        //开始将单个图片逐个画到画布上
-        for (int picIndex = 0; picIndex < bufferedImages.size(); picIndex++) {
-            if (totalPicNum == 2 || totalPicNum == 5 || totalPicNum == 6) {
-                //需要特殊处理，来让图片垂直居中
-                specialDraw(bufferedImages.get(picIndex), picIndex, picInfo, graphics2d, totalPicNum);
-            } else {
-                //不需要特殊处理，按照正常的处理逻辑
-                normalDraw(bufferedImages.get(picIndex), picIndex, picInfo, graphics2d);
+        if (size >= 5) {
+            width = 40;
+        }
+        return width;
+    }
+
+    public static void download(String urlString, String filename, String savePath) throws Exception {
+        // 构造URL
+        URL url = new URL(urlString);
+        // 打开连接
+        URLConnection con = url.openConnection();
+        // 设置请求超时为5s
+        con.setConnectTimeout(5 * 1000);
+        // 输入流
+        InputStream is = con.getInputStream();
+
+        // 1K的数据缓冲
+        byte[] bs = new byte[1024];
+        // 读取到的数据长度
+        int len;
+        // 输出的文件流
+        File sf = new File(savePath);
+        if (!sf.exists()) {
+            sf.mkdirs();
+        }
+        OutputStream os = new FileOutputStream(sf.getPath() + File.separator + filename);
+        // 开始读取
+        while ((len = is.read(bs)) != -1) {
+            os.write(bs, 0, len);
+        }
+        // 完毕，关闭所有链接
+        os.close();
+        is.close();
+    }
+
+    public static String zoom(String sourcePath, String targetPath, int width, int height) throws IOException {
+        File imageFile = new File(sourcePath);
+        if (!imageFile.exists()) {
+            throw new IOException("Not found the images:" + sourcePath);
+        }
+        if (targetPath == null || targetPath.isEmpty()) {
+            targetPath = sourcePath;
+        }
+        BufferedImage image = ImageIO.read(imageFile);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        image = zoom(image, width, height);
+        ImageIO.write(image, "png", outputStream);
+        //将图片转成base64,再写入目标路径
+        String base64 = Base64.getEncoder().encodeToString(outputStream.toByteArray());
+        File target = new File(targetPath);
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] b = decoder.decode(base64);
+        for (int i = 0; i < b.length; ++i) {
+            if (b[i] < 0) {
+                b[i] += 256;
             }
         }
-        //将最终结果图片输出到指定文件
-        ImageIO.write(outImage, PICTRUE_FORMATE_JPG, new File(destPath));
+        OutputStream os = new FileOutputStream(target);
+        os.write(b);
+        os.flush();
+        os.close();
+        outputStream.flush();
+        outputStream.close();
+        return targetPath;
     }
 
-    private static void specialDraw(BufferedImage bufferedImage, int picIndex, PicInfo picInfo, Graphics2D graphics2d, int totalPicNum) {
-        int xIndex = (picIndex % picInfo.getPicNumPerRow());
-        int y = 0;
-        if (totalPicNum == 2) {
-            y = PIC_HEIGHT / 4;
-        } else if (totalPicNum == 5 || totalPicNum == 6) {
-            if (picIndex < 3) {
-                y = (PIC_HEIGHT / 2 - PIC_HEIGHT / 3);
-            } else {
-                y = PIC_HEIGHT / 2;
+    private static BufferedImage zoom(BufferedImage sourceImage, int width, int height) {
+        BufferedImage zoomImage = new BufferedImage(width, height, sourceImage.getType());
+        Image image = sourceImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Graphics gc = zoomImage.getGraphics();
+        gc.setColor(Color.WHITE);
+        gc.drawImage(image, 0, 0, null);
+        return zoomImage;
+    }
+
+    public static void createImage(List<String> files, String outPath, String tempName) throws Exception {
+        String[] imageSize = getXy(files.size());
+        int width = getWidth(files.size());
+        BufferedImage ImageNew = new BufferedImage(132, 132, BufferedImage.TYPE_INT_RGB);
+        //设置背景为白色
+        for (int m = 0; m < 132; m++) {
+            for (int n = 0; n < 132; n++) {
+                ImageNew.setRGB(m, n, 0xFFFFFF);
             }
         }
-        graphics2d.drawImage(bufferedImage, xIndex * picInfo.getPerPicWith(), y, null);
-    }
+        for (int i = 0; i < imageSize.length; i++) {
+            String size = imageSize[i];
+            String[] sizeArr = size.split(",");
+            int x = Integer.parseInt(sizeArr[0]);
+            int y = Integer.parseInt(sizeArr[1]);
+            String f = zoom(files.get(i), tempName, width, width);
+            File fileOne = new File(f);
+            BufferedImage ImageOne = ImageIO.read(fileOne);
 
-    private static void normalDraw(BufferedImage bufferedImage, int picIndex, PicInfo picInfo, Graphics2D graphics2d) {
-        int xIndex = (picIndex % picInfo.getPicNumPerRow());
-        int yIndex = (picIndex / picInfo.getPicNumPerRow());
-        graphics2d.drawImage(bufferedImage, xIndex * picInfo.getPerPicWith(), yIndex * picInfo.getPerPicHeight(), null);
-    }
-
-    /**
-     * 图片缩放
-     *
-     * @param width     宽度
-     * @param height    高度
-     * @param fillWhite 比例不对时是否需要补白
-     */
-    public static BufferedImage resizeImage(BufferedImage bufferedImage, int width, int height, boolean fillWhite) {
-        double ratio = 0; // 缩放比例
-        Image newImage = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        // 计算比例
-        if ((bufferedImage.getHeight() > height) || (bufferedImage.getWidth() > width)) {
-            if (bufferedImage.getHeight() > bufferedImage.getWidth()) {
-                ratio = (new Integer(height)).doubleValue() / bufferedImage.getHeight();
-            } else {
-                ratio = (new Integer(width)).doubleValue() / bufferedImage.getWidth();
-            }
-            AffineTransformOp affineTransformOp = new AffineTransformOp(AffineTransform.getScaleInstance(ratio, ratio), null);
-            newImage = affineTransformOp.filter(bufferedImage, null);
+            // 从图片中读取RGB
+            int[] ImageArrayOne = new int[width * width];
+            ImageArrayOne = ImageOne.getRGB(0, 0, width, width, ImageArrayOne, 0, width);
+            ImageNew.setRGB(x, y, width, width, ImageArrayOne, 0, width);// 设置左半部分的RGB
         }
-        if (fillWhite) {
-            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-            Graphics2D g = image.createGraphics();
-            g.setColor(Color.white);
-            g.fillRect(0, 0, width, height);
-            if (width == newImage.getWidth(null)) {
-                g.drawImage(newImage, 0, (height - newImage.getHeight(null)) / 2, newImage.getWidth(null), newImage.getHeight(null), Color.white, null);
-            } else {
-                g.drawImage(newImage, (width - newImage.getWidth(null)) / 2, 0, newImage.getWidth(null), newImage.getHeight(null), Color.white, null);
-            }
-            g.dispose();
-            newImage = image;
-        }
-        return (BufferedImage) newImage;
+        File outFile = new File(outPath);
+        ImageIO.write(ImageNew, "png", outFile);// 写图片
     }
 
-    /**
-     * 缩放本地图片
-     *
-     * @param file
-     * @param width
-     * @param height
-     * @param fillWhite
-     */
-    public static BufferedImage resizeLocalImage(File file, int width, int height, boolean fillWhite) {
+    public static String createImgFromUrlList(List<String> urlList, String folderName) {
         try {
-            //从本地加载图片
-            BufferedImage bufferedImage = ImageIO.read(file);
-            return resizeImage(bufferedImage, width, height, fillWhite);
-        } catch (IOException e) {
+            int size = urlList.size();
+            if (size > 9) {
+                size = 9;
+            }
+            List<String> fileList = new ArrayList<>();
+            for (int i = 0; i < size; i++) {
+                String filename = i + ".jpg";
+                download(urlList.get(i), filename, folderName);
+                fileList.add(folderName + filename);
+            }
+            String outName = folderName + "headImg.jpg";
+            String tempName = folderName + "temp";
+            createImage(fileList, outName, tempName);
+            for (String filename : fileList) {
+                File file = new File(filename);
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+            File tempFile = new File(tempName);
+            if (tempFile.exists()) {
+                tempFile.delete();
+            }
+            return outName;
+        } catch (Exception e) {
+            e.printStackTrace();
             e.printStackTrace();
         }
         return null;
     }
 
-    /**
-     * 缩放网络图片
-     *
-     * @param imageUrl
-     * @param width
-     * @param height
-     * @param fillWhite
-     */
-    public static BufferedImage resizeNetWorkImage(String imageUrl, int width, int height, boolean fillWhite) {
-        try {
-            //从网络加载图片
-            File f = new File(imageUrl);
-            BufferedImage bufferedImage = ImageIO.read(f);
-            return resizeImage(bufferedImage, width, height, fillWhite);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    public static void main(String[] args) throws Exception {
+        List<String> urlList = new ArrayList<>();
+        urlList.add(
+                "https://ahxd-private.obs.cn-east-3.myhuaweicloud.com:443/user%2F839863417086455808%2FheadImg%2Ffirst.jpg");
+        urlList.add(
+                "https://ahxd-private.obs.cn-east-3.myhuaweicloud.com:443/user%2F841997676445491200%2FheadImg%2Ffirst.jpg");
+        urlList.add(
+                "https://ahxd-private.obs.cn-east-3.myhuaweicloud.com:443/user%2F842474480168919040%2FheadImg%2Ffirst.jpg");
 
-    /**
-     * 获取群头像中每行/列显示的图片数
-     *
-     * @param totalPicNum 图片数量
-     */
-    private static PicInfo getPicInfo(int totalPicNum) {
-        //每行显示图片数
-        int picNumPerRow = 1;
-        //每列显示图片数
-        int picNumPerCol = 1;
-        switch (totalPicNum) {
-            case 1:
-                picNumPerRow = 1;
-                picNumPerCol = 1;
-                break;
-            case 2:
-                picNumPerRow = 2;
-                picNumPerCol = 1;
-                break;
-            case 3:
-            case 4:
-                picNumPerRow = 2;
-                picNumPerCol = 2;
-                break;
-            case 5:
-            case 6:
-                picNumPerRow = 3;
-                picNumPerCol = 2;
-                break;
-            case 7:
-            case 8:
-            case 9:
-                picNumPerRow = 3;
-                picNumPerCol = 3;
-                break;
-            default:
-                picNumPerRow = 1;
-                picNumPerCol = 1;
-                break;
-        }
-        int perPicWith = PIC_WIDTH / picNumPerRow;
-        int perPicHeight = PIC_HEIGHT / picNumPerCol;
+        String destPath = System.getProperty("java.io.tmpdir") + "123456" + File.separator;
+        String string = createImgFromUrlList(urlList, destPath);
 
-        //图片有效宽/高
-        int effectWithHeight = Math.min(perPicWith, perPicHeight);
-
-        PicInfo picInfo = new PicInfo();
-        //图片的宽高统一
-        picInfo.setPerPicWith(effectWithHeight);
-        picInfo.setPerPicHeight(effectWithHeight);
-        picInfo.setPicNumPerRow(picNumPerRow);
-        picInfo.setPicNumPerCol(picNumPerCol);
-        return picInfo;
-    }
-
-    /**
-     * 图片位置
-     *
-     * @author tianchaohui
-     */
-    public static class PicLocation {
-        //横坐标
-        int xIndex = 0;
-        //纵坐标
-        int yIndex = 0;
-
-        public int getxIndex() {
-            return xIndex;
-        }
-
-        public void setxIndex(int xIndex) {
-            this.xIndex = xIndex;
-        }
-
-        public int getyIndex() {
-            return yIndex;
-        }
-
-        public void setyIndex(int yIndex) {
-            this.yIndex = yIndex;
-        }
-    }
-
-    /**
-     * 填充图片信息
-     *
-     * @author tianchaohui
-     */
-    public static class PicInfo {
-        //每张图片宽度
-        private int perPicWith;
-        //每张图片高度
-        private int perPicHeight;
-        //每行显示图片数
-        int picNumPerRow;
-        //每列显示图片数
-        int picNumPerCol;
-
-        public int getPerPicWith() {
-            return perPicWith;
-        }
-
-        public void setPerPicWith(int perPicWith) {
-            this.perPicWith = perPicWith;
-        }
-
-        public int getPerPicHeight() {
-            return perPicHeight;
-        }
-
-        public void setPerPicHeight(int perPicHeight) {
-            this.perPicHeight = perPicHeight;
-        }
-
-        public int getPicNumPerRow() {
-            return picNumPerRow;
-        }
-
-        public void setPicNumPerRow(int picNumPerRow) {
-            this.picNumPerRow = picNumPerRow;
-        }
-
-        public int getPicNumPerCol() {
-            return picNumPerCol;
-        }
-
-        public void setPicNumPerCol(int picNumPerCol) {
-            this.picNumPerCol = picNumPerCol;
-        }
-
-        @Override
-        public String toString() {
-            return "PicInfo [perPicWith=" + perPicWith + ", perPicHeight=" + perPicHeight + ", picNumPerRow="
-                    + picNumPerRow + ", picNumPerCol=" + picNumPerCol + "]";
-        }
+        /*
+         * imgList.add("E:/qq/4.jpg"); imgList.add("E:/qq/5.jpg");
+         * imgList.add("E:/qq/6.jpg"); imgList.add("E:/qq/7.jpg");
+         * imgList.add("E:/qq/8.jpg"); imgList.add("E:/qq/9.jpg");
+         */
+        // createImage(urlList,"E:g.png");
+        System.out.println("生成完成" + string);
     }
 
 }

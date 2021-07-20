@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * @author dzy
  * @date 2021/5/13
  * @desc 华为云对象存储Obs配置文件
  */

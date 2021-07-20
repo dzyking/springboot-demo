@@ -1,7 +1,6 @@
 package com.demo.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -21,9 +20,9 @@ import java.util.Date;
  *
  * @author 313921
  */
+@Slf4j
 public class IdCardUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(IdCardUtil.class);
 
     /**
      * <pre>
@@ -112,7 +111,7 @@ public class IdCardUtil {
         // 非18位为假
         int s = 18;
         if (idcard.length() != s) {
-            logger.error("身份证位数不正确!");
+            log.error("身份证位数不正确!");
             return false;
         }
         // 获取前17位
@@ -343,7 +342,6 @@ public class IdCardUtil {
     /**
      * 将和值与11取模得到余数进行校验码判断
      *
-     * @param checkCode
      * @param sum17
      * @return 校验位
      */
