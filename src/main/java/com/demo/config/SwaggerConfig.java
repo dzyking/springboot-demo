@@ -45,9 +45,9 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("默言默语")
+                .title("文档")
                 .description("api接口文档")
-                .termsOfServiceUrl("http://www.docway.net/project/1eXHcc3Erbt/1eXHjVeWK9Y")
+                .termsOfServiceUrl("http://www.baidu.com")
                 .build();
     }
 
