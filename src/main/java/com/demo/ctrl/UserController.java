@@ -1,5 +1,6 @@
 package com.demo.ctrl;
 
+import com.demo.annotation.Log;
 import com.demo.dto.UserDTO;
 import com.demo.entity.PageParam;
 import com.demo.entity.Result;
@@ -25,6 +26,7 @@ public class UserController {
 
     @GetMapping("/getAll")
     @ApiOperation("用户列表")
+    @Log(title = "用户列表")
     public String getAll(PageParam pageParam) {
         //设置分页规则
         PageHelper.startPage(pageParam.getPageNum(), pageParam.getPageSize());
@@ -34,7 +36,8 @@ public class UserController {
     }
 
     @GetMapping("/getListByParam")
-    @ApiOperation("根据参数查询反用户列表")
+    @ApiOperation("根据参数查询用户列表")
+    @Log(title = "用户列表")
     public String getListByParam(UserDTO dto) {
         //设置分页规则
         PageHelper.startPage(dto.getPageNum(), dto.getPageSize());

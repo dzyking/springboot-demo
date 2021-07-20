@@ -1,10 +1,7 @@
 package com.demo.constant;
 
 /**
- * @Author :lrj
- * @ClassName :RedisConstant
  * @Description :redis相关常量
- * @date :2021/4/30 13:07
  */
 public class RedisConstant {
     /**
@@ -60,6 +57,4 @@ public class RedisConstant {
     public static final String AREA_CITY_LIST_NAME = "area:province:province_";
     public static final String AREA_TOWN_LIST_NAME = "area:city:city_";
 
-    //用户文件夹  "user/"+userId+"/headImg/first.jpg"
-    //群组文件夹  "group/"+groupId+"/headImg.jpg"
 }

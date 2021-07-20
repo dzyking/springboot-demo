@@ -1,7 +1,9 @@
-package com.demo.intercept.exception;
+package com.demo.intercept;
+
 
 import com.demo.entity.Result;
 import com.demo.entity.StatusCode;
+import com.demo.entity.exception.BizException;
 import com.demo.entity.exception.BusinessException;
 import com.demo.entity.exception.CommonEnum;
 import org.slf4j.Logger;
@@ -18,7 +20,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 
 /**
- * @desc 全局异常监听器,自定义异常等
+ * @author dzy
+ * @date 2021/5/12
+ * @desc 全局异常监听器
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -35,11 +39,23 @@ public class GlobalExceptionHandler {
         return Result.error(e.getErrorCode(), e.getErrorMsg());
     }
 
+    /**
+     * 处理自定义的业务异常
+     *
+     * @param e
+     * @return string
+     */
+    @ExceptionHandler(value = BizException.class)
+    public String bizExceptionHandler(BizException e) {
+        logger.error("发生业务异常！原因是：{}", e.getErrorMsg());
+        return Result.error(String.valueOf(StatusCode.ERROR), e.getErrorMsg());
+    }
 
     /**
      * 处理空指针的异常
      *
      * @param e
+     * @return string
      */
     @ExceptionHandler(value = NullPointerException.class)
     public String exceptionHandler(NullPointerException e) {
@@ -51,6 +67,7 @@ public class GlobalExceptionHandler {
      * 处理参数校验的异常
      *
      * @param e
+     * @return string
      */
     @ExceptionHandler(value = BindException.class)
     public String bindExceptionExceptionHandler(BindException e) {
@@ -70,6 +87,7 @@ public class GlobalExceptionHandler {
      * 处理其他异常
      *
      * @param e
+     * @return string
      */
     @ExceptionHandler(value = Exception.class)
     public String exceptionHandler(Exception e) {
@@ -81,6 +99,7 @@ public class GlobalExceptionHandler {
      * 处理请求方法不支持异常
      *
      * @param e
+     * @return string
      */
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     public String methodNotSupportedHandler(Exception e) {
@@ -95,6 +114,7 @@ public class GlobalExceptionHandler {
      * @return String
      * @Title: messageNotReadable
      * @Description: @RequestBody中参数校验失败，捕捉异常
+     * @author lrj
      * @Date 2020年10月20日下午2:01:57
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)

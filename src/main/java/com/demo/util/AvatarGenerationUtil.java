@@ -11,11 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author lingzhiying
- * @title: test.java
- * @projectName spacepm
  * @description: 头像生成工具
- * @date 2019年1月11日
  */
 public class AvatarGenerationUtil {
 
