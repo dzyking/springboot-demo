@@ -10,3 +10,5 @@
 8.LogRecordAspect切面打印接口请求信息,输入输出<br>
 9.TokenUtil简单的登陆token应用<br>
 10.多环境配置文件<br>
+11.随机生成人名<br>
+12.生成群成员默认头像<br>
