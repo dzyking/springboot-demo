@@ -1,6 +1,6 @@
 # springboot-demo
 
-1.带Authorization的Swagger<br>
+1.开启认证模块Authorization的Swagger<br>
 2.简单的redis应用<br>
 3.第三方对象存储服务(阿里云oss,华为云obs等)配置工具类<br>
 4.pagehelper分页应用<br>
