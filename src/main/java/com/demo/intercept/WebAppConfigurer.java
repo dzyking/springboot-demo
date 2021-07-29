@@ -31,9 +31,7 @@ public class WebAppConfigurer extends WebMvcConfigurationSupport {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/user/register", "/user/smsCode", "/user/login")
                 .excludePathPatterns("/swagger-ui.html/**", "/v2/**", "/webjars/**", "/swagger-resources/**")
-                .excludePathPatterns("/userCard/selectAllUserCard")
-                .excludePathPatterns("/systemCard/add", "/systemCard/delete", "/systemCard/update", "/systemCard/selectAll")
-                .excludePathPatterns("/public/**", "/common/districts");
+                .excludePathPatterns("/public/**", "/test/**");
         super.addInterceptors(registry);
     }
 

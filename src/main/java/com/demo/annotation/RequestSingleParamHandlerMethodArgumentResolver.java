@@ -1,6 +1,5 @@
 package com.demo.annotation;
 
-import com.alibaba.fastjson.JSONObject;
 import com.demo.entity.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -52,12 +51,13 @@ public class RequestSingleParamHandlerMethodArgumentResolver implements HandlerM
         while ((rd = reader.read(buf)) != -1) {
             sb.append(buf, 0, rd);
         }
-        JSONObject jsonObject = JSONObject.parseObject(sb.toString());
+      /*  JSONObject jsonObject = JSONObject.parseObject(sb.toString());
         if (requestSingleParam == null) {
             throw new BusinessException("参数不能为空");
         }
         String value = requestSingleParam.value();
-        return jsonObject.get(value);
+        return jsonObject.get(value);*/
+        return null;
     }
 
 }
