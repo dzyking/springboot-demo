@@ -1,7 +1,7 @@
 spring:
   profiles: test
   application:
-    name: im-service
+    name: demo
   main:
     allow-bean-definition-overriding: true #当遇到同样名字的时候，是否允许覆盖注册
   datasource:
@@ -69,6 +69,11 @@ mybatis-plus:
     cache-enabled: false
     #配置JdbcTypeForNull
     jdbc-type-for-null: 'null'
+
+plumelog:
+  appName: demo
+  redisHost: 119.3.23.16:6379
+  redisAuth: pwd
 
 #华为obs配置
 obs:
