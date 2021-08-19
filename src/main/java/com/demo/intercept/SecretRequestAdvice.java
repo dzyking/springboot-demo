@@ -1,9 +1,12 @@
 package com.demo.intercept;
 
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.demo.config.RsaConfig;
 import com.demo.entity.SecretHttpMessage;
 import com.demo.entity.exception.BusinessException;
-import com.demo.util.RSAUtil;
+import com.demo.util.SecretUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,16 +22,17 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
+import java.net.BindException;
 import java.nio.charset.Charset;
 
 /**
  * @author dzy
  * @date 2021/7/23
- * @desc 解密拦截器
+ * @desc
  */
 @Slf4j
 @ControllerAdvice
-@ConditionalOnProperty(prefix = "secret", name = "enabled", havingValue = "true")
+@ConditionalOnProperty(prefix = "rsa", name = "enabled", havingValue = "true")
 @EnableConfigurationProperties({RsaConfig.class})
 public class SecretRequestAdvice extends RequestBodyAdviceAdapter {
 
@@ -63,11 +67,10 @@ public class SecretRequestAdvice extends RequestBodyAdviceAdapter {
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
         //如果有注解
         boolean supportSafeMessage = supportSecretRequest(parameter);
-        String httpBody;
         if (supportSafeMessage) {
-            httpBody = decryptBody(inputMessage);
+            String httpBody = decryptBody(inputMessage);
             if (httpBody == null) {
-                throw new BusinessException("解密失败");
+                throw new BindException("解密失败");
             }
             //返回处理后的消息体给messageConvert
             return new SecretHttpMessage(new ByteArrayInputStream(httpBody.getBytes()), inputMessage.getHeaders());
@@ -85,7 +88,35 @@ public class SecretRequestAdvice extends RequestBodyAdviceAdapter {
     private String decryptBody(HttpInputMessage inputMessage) throws IOException {
         InputStream encryptStream = inputMessage.getBody();
         String encryptBody = StreamUtils.copyToString(encryptStream, Charset.defaultCharset());
+        return SecretUtil.rsaDecrypt(encryptBody, rsaConfig.getPrivateKey());
+    }
 
-        return RSAUtil.decrypt(encryptBody, rsaConfig.getPrivateKey());
+    /**
+     * AES+RSA组合解密
+     *
+     * @param inputMessage 消息体
+     * @return 明文
+     */
+    private String decryptBodyCombination(HttpInputMessage inputMessage) {
+        String original;
+        try {
+            InputStream encryptStream = inputMessage.getBody();
+            String encryptBody = StreamUtils.copyToString(encryptStream, Charset.defaultCharset());
+            JSONObject jsonObject = JSON.parseObject(encryptBody);
+            String key = String.valueOf(jsonObject.get("key"));
+            String content = String.valueOf(jsonObject.get("content"));
+            // 1.先使用RSA私钥解密出AESKey
+            String AESKey = SecretUtil.rsaDecrypt(key, rsaConfig.getPrivateKey());
+            log.info("AESKey:" + AESKey);
+            // 2.使用AESKey解密内容
+            original = SecretUtil.aesDecrypt(content, AESKey);
+            log.info("原文:" + original);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException("解密失败");
+        }
+
+        return original;
     }
 }

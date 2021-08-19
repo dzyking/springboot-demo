@@ -1,5 +1,6 @@
-package com.demo.annotation;
+package com.demo.intercept;
 
+import com.demo.annotation.RequestSingleParam;
 import com.demo.entity.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;

@@ -5,13 +5,18 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @description: 头像生成工具
+ * @author lingzhiying
+ * @title: test.java
+ * @projectName spacepm
+ * @description: 用户头像生成工具
+ * @date 2019年1月11日
  */
 public class AvatarGenerationUtil {
 
@@ -71,7 +76,7 @@ public class AvatarGenerationUtil {
         Font font = null;
         //两个字及以上
         if (nameWritten.length() >= 2) {
-            font = new Font("微软雅黑", Font.PLAIN, 30);
+            font = new Font("宋体", Font.PLAIN, 30);
             g2.setFont(font);
 
             String firstWritten = nameWritten.substring(0, 1);
@@ -93,15 +98,18 @@ public class AvatarGenerationUtil {
         }
         //一个字
         if (nameWritten.length() == 1) {
+            String simsunPath = "/usr/share/fonts/MSYHL.TTC";
             //中文
             if (isChinese(nameWritten)) {
-                font = new Font("微软雅黑", Font.PLAIN, 50);
+                //font = new Font("宋体", Font.PLAIN, 64);
+                font = styleFont(simsunPath, Font.PLAIN, 64);
                 g2.setFont(font);
-                g2.drawString(nameWritten, 25, 70);
+                g2.drawString(nameWritten, 18, 74);
             }
             //英文
             else {
-                font = new Font("微软雅黑", Font.PLAIN, 55);
+                //font = new Font("宋体", Font.PLAIN, 55);
+                font = styleFont(simsunPath, Font.PLAIN, 60);
                 g2.setFont(font);
                 g2.drawString(nameWritten.toUpperCase(), 33, 67);
             }
@@ -185,6 +193,38 @@ public class AvatarGenerationUtil {
         g2.drawImage(image, 0, 0, null);
         g2.dispose();
         return output;
+    }
+
+    /**
+     * 本地读取方法
+     *
+     * @param path     文件路径
+     * @param style    字体样式
+     * @param fontSize 字体大小
+     * @return
+     */
+    public static Font styleFont(String path, int style, float fontSize) {
+        return loadStyleFont(path, style, fontSize);
+    }
+
+    /**
+     * @param fontFileName 外部字体名
+     * @param style        字体样式
+     * @param fontSize     字体大小
+     * @return
+     */
+    public static Font loadStyleFont(String fontFileName, int style, float fontSize) {
+        try {
+            File file = new File(fontFileName);
+            FileInputStream in = new FileInputStream(file);
+            Font dynamicFont = Font.createFont(Font.TRUETYPE_FONT, in);
+            Font dynamicFontPt = dynamicFont.deriveFont(style, fontSize);
+            in.close();
+            return dynamicFontPt;
+        } catch (Exception e) {//异常处理
+            e.printStackTrace();
+            return new Font("宋体", Font.PLAIN, 20);
+        }
     }
 }
 

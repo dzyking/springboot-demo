@@ -78,10 +78,6 @@ obs:
   sk: 3qDRxizVN8ukaMfPPpqtvprzr34TEx7BpwhM1jhC
   bucketLocation: cn-east-3
 
-secret:
-  enabled: true
-  scan-annotation: true
-
 rsa:
   enabled: true
   scan-annotation: true

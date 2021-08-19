@@ -1,6 +1,5 @@
 package com.demo.intercept;
 
-import com.demo.annotation.RequestSingleParamHandlerMethodArgumentResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
